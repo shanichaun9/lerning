@@ -1,20 +1,23 @@
-import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
-import { NativeModules } from 'react-native';
+import { View, Text, Button } from 'react-native'
+import React, { createContext, useState } from 'react'
+import ComOne from './src/components/comOne'
+import ComTwo from './src/components/comTwo'
 
-const { MyNativeModule} = NativeModules
-
+import MyContext from './src/components/context/MyContext';
+import ClassCom from './src/components/ClassCom';
 export default function App() {
-  console.log('nativemodules', MyNativeModule)
-  useEffect(()=>{
-    MyNativeModule.hello('this is the test message',(message) => {
-      console.log(message,'meesage from android native code');
-  });
-console.log('usereffec called')
-  }, [])
   return (
+    <>
+    <MyContext>
     <View>
-      <Text>App</Text>
+     <ComOne/>
+     <ComTwo />
+     <ClassCom />
+     <Text>asdfa sdfasdf</Text>
     </View>
+    <Text>context insdie </Text>
+
+    </MyContext>
+    </>
   )
 }
