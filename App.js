@@ -1,20 +1,27 @@
-import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, Button, TextInput } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { NativeModules } from 'react-native';
+import ChildCom from './ChildCom';
 
 const { MyNativeModule} = NativeModules
 
 export default function App() {
-  console.log('nativemodules', MyNativeModule)
-  useEffect(()=>{
-    MyNativeModule.hello('this is the test message',(message) => {
-      console.log(message,'meesage from android native code');
-  });
-console.log('usereffec called')
-  }, [])
+
+  const [count, setCount] = useState(0)
+  const [test, setTest] = useState(false)
+
+
+  const myFun = useCallback(() =>{
+    return [count, count + 1, count + 2]
+  },[count])
+  console.log('App.js console')
   return (
     <View>
-      <Text>App</Text>
+      <Text>Count:{count}</Text>
+      <Text>test:{test ? 'true' : 'false'}</Text>
+      <TextInput onChangeText={(e)=> setCount(Number(e))} value={count}/>
+      <Button title='Parent data' onPress={()=> {setTest((pre => !pre))}}/>
+      <ChildCom myFun={myFun}/>
     </View>
   )
 }
